@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <br>
+        <ion-title><ion-icon name="logo-instagram"></ion-icon>INSTA-CLONE</ion-title>
+    <br>
+        
+    <ion-avatar >
+        <ion-img src="{{usuario.fotoPerfil}}" ></ion-img>
+    </ion-avatar>
+    <br>
+        
+    <ion-buttons slot="secondary">
+        <img *ngFor="let usuario of usuarios" [src]="usuario.imagen" class="storyCircle" (click)="showStory(usuario.nombre)">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+      <ion-row>
+          <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
+              <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button (click)="photoService.addNewToGallery()">
+          <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
+</ion-content>

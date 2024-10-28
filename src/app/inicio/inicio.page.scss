@@ -1,0 +1,36 @@
+.fotoperfil {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+} 
+
+span {
+    display: block;
+}
+.strong {
+    font-weight: bold;
+}
+
+ion-button {
+    width: 100%;
+}
+
+.centrar {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+img.galeria{
+    width: 150px;
+    height: 150px
+}
+
+.centrar-icono{
+    text-align: center;
+}
+
+

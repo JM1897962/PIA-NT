@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-grid id="about">
+    <!-- <ion-row>{{usuario.alias}}</ion-row> -->
+    <ion-row>
+        <ion-col size="3">
+          <span>juanm_2901 <ion-icon ios="arrow-down"></ion-icon> </span>
+            <img src="{{usuario.fotoPerfil}}" alt="" class="fotoperfil">
+        </ion-col>
+        <ion-col size="3">
+            <span class="strong">{{usuario.publicaciones}}</span>
+            <span>Publicaciones</span>
+        </ion-col>
+        <ion-col size="3">
+            <span class="strong">{{usuario.seguidores}}</span>
+            <span>Seguidores</span>
+        </ion-col>
+        <ion-col size="3">
+            <span class="strong">{{usuario.seguidos}}</span>
+            <span>Seguidos</span>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="4">
+            <ion-button (click)="seguir()">
+                <span *ngIf="!siguiendo">Seguir</span>
+                <span *ngIf="siguiendo">Dejar de Seguir</span>
+            </ion-button>
+        </ion-col>
+        <ion-col size="4">
+            <ion-button class="secundario" (click)="enviarMensaje()">Mensaje</ion-button>
+        </ion-col>
+        <ion-col size="2">
+            <ion-button class="secundario" (click)="enviarEmail()">Email</ion-button>
+        </ion-col>
+        <ion-col size="1">
+            <ion-button class="secundario" (click)="desplegarOpciones()"><ion-icon name="caret-down-outline"></ion-icon></ion-button>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid> <!--Contenido de Galeria-->
+    <ion-row> <!--Fila 1-->
+      <ion-col>
+        <img src="assets/imagenes/DonkeyKongCountry.jpg" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/DonkeyKongCountry.jpg" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/DonkeyKongCountry.jpg" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/DonkeyKongCountry.jpg" alt="">
+      </ion-col>
+    </ion-row>
+    <ion-row> <!--Fila 2-->
+      <ion-col>
+        <img src="assets/imagenes/Sonic.png" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/Sonic.png" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/Sonic.png" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/Sonic.png" alt="">
+      </ion-col>
+    </ion-row>
+    <ion-row> <!--Fila 3-->
+      <ion-col>
+        <img src="assets/imagenes/pacman.jpg" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/pacman.jpg" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/pacman.jpg" alt="">
+      </ion-col>
+      <ion-col>
+        <img src="assets/imagenes/pacman.jpg" alt="">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+
