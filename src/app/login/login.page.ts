@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
     if(user!=null && user.code ==undefined){
       console.log('Successfully logged in!');
       setTimeout(() => {
-        this.router.navigate(['/tabs']);
+        this.router.navigate(['/tabs/inicio']);
       }, 650);
     }
     else{

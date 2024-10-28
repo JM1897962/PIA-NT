@@ -1,19 +1,8 @@
 <ion-header>
-  <ion-toolbar>
-    <br>
-        <ion-title><ion-icon name="logo-instagram"></ion-icon>INSTA-CLONE</ion-title>
-    <br>
-        
-    <ion-avatar >
-        <ion-img src="{{usuario.fotoPerfil}}" ></ion-img>
-    </ion-avatar>
-    <br>
-        
-    <ion-buttons slot="secondary">
-        <img *ngFor="let usuario of usuarios" [src]="usuario.imagen" class="storyCircle" (click)="showStory(usuario.nombre)">
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Vender NFTs</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
   <ion-grid>
