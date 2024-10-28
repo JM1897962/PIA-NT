@@ -1,8 +1,7 @@
-.fotoperfil {
-    border-radius: 50%;
-    height: 80px;
-    width: 80px;
-} 
+.fotoperfil.grande {
+    width: 120px; /* Nuevo tamaño */
+    height: 120px;
+  }
 
 span {
     display: block;
