@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Datos de Tarjeta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ingresa los datos de tu tarjeta</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Número de Tarjeta</ion-label>
+        <ion-input type="tel" placeholder="1234 5678 9012 3456" maxlength="16"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Nombre del Titular</ion-label>
+        <ion-input type="text" placeholder="Nombre Apellido"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Fecha de Vencimiento</ion-label>
+        <ion-input type="text" placeholder="MM/AA" maxlength="5"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">CVV</ion-label>
+        <ion-input type="password" placeholder="123" maxlength="3"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" color="secondary">
+        Guardar Tarjeta
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

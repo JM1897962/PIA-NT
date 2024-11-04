@@ -16,6 +16,10 @@ const routes: Routes = [
       {
         path: 'galeria',
         loadChildren: () => import('../galeria/galeria.module').then(m=>m.GaleriaPageModule)
+      },
+      {
+        path: 'targets',
+        loadChildren: () => import('../targets/targets.module').then(m=>m.TargetsPageModule)
       }
     ]
   },
@@ -23,7 +27,13 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/inicio',
     pathMatch: 'full'
-  }
+  },
+
+      {
+        path: 'login',
+        loadChildren: () => import('../login/login.module').then(m=>m.LoginPageModule)
+      }
+      
 ];
 
 @NgModule({

@@ -33,6 +33,11 @@ const routes: Routes = [
     path: 'galeria',
     loadChildren: () => import('./galeria/galeria.module').then( m => m.GaleriaPageModule)
   },
+  {
+    path: 'targets',
+    loadChildren: () => import('./targets/targets.module').then( m => m.TargetsPageModule)
+  },
+
 ];
 
 @NgModule({
