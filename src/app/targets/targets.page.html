@@ -1,18 +1,25 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Foto en Venta</ion-title>
+    <ion-title>Fotos en Venta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="selectedPhoto" class="photo-card">
-    <ion-card-header class="photo-header">
-      <ion-card-title>{{ selectedPhoto.seller }}</ion-card-title>
-      <ion-card-subtitle>Precio: ${{ selectedPhoto.price }}</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-img *ngIf="selectedPhoto.webviewPath" [src]="selectedPhoto.webviewPath" class="photo-img"></ion-img>
-    </ion-card-content>
-  </ion-card>
+  <!-- Sección de fotos disponibles para la compra -->
+  <ion-list lines="full">
+    <ion-card *ngFor="let photo of targetPhotos" class="photo-card">
+      <ion-card-header>
+        <ion-card-title class="card-title">{{ photo.seller }}</ion-card-title>
+        <ion-card-subtitle class="card-subtitle">Precio: ${{ photo.price }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Mostrar la imagen de la foto -->
+        <ion-img [src]="getWebviewPath(photo)" class="photo-image"></ion-img>
+        <!-- Botón para comprar con diseño más pequeño -->
+        <ion-button (click)="addToCart(photo)" color="secondary" expand="block" class="buy-button">
+          Comprar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>

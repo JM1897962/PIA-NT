@@ -33,11 +33,11 @@ export class GaleriaPage implements OnInit {
           }
         },
         {
-          text: 'Precio',
+          text: 'Vender',
           icon: 'pricetag',
           handler: async () => {
             const alert = await this.alertController.create({
-              header: 'Ingresar Precio y Nombre del Vendedor',
+              header: 'Ingresar Datos de Venta',
               inputs: [
                 {
                   name: 'price',
