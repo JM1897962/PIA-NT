@@ -33,17 +33,22 @@ export class GaleriaPage implements OnInit {
           }
         },
         {
-          text: 'Precio',
+          text: 'Vender',
           icon: 'pricetag',
           handler: async () => {
-            // Abre un prompt para ingresar el precio
+            // Abre un prompt para ingresar el precio y el nombre
             const alert = await this.alertController.create({
-              header: 'Ingresar Precio',
+              header: 'Ingresar Precio y Nombre del Vendedor',
               inputs: [
                 {
                   name: 'price',
                   type: 'number',
                   placeholder: 'Ingrese el precio'
+                },
+                {
+                  name: 'seller',
+                  type: 'text',
+                  placeholder: 'Ingrese su nombre'
                 }
               ],
               buttons: [
@@ -58,12 +63,13 @@ export class GaleriaPage implements OnInit {
                   text: 'Publicar',
                   handler: (data) => {
                     const price = data.price;
-                    if (price) {
-                      // Publicar o almacenar el precio
-                      console.log(`Precio publicado: ${price}`);
-                      this.photoService.publishPrice(photo, price); // Método para guardar o publicar el precio
+                    const seller = data.seller;
+                    if (price && seller) {
+                      // Publicar o almacenar el precio y el nombre
+                      console.log(`Precio publicado: ${price}, Vendedor: ${seller}`);
+                      this.photoService.publishPrice(photo, price, seller); // Método para guardar o publicar el precio y el vendedor
                     } else {
-                      console.log('No se ingresó un precio');
+                      console.log('No se ingresó un precio o nombre');
                     }
                   }
                 }

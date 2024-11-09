@@ -108,7 +108,7 @@ export class PhotoService {
     });
 
   // Método para publicar o almacenar el precio
-  public publishPrice(photo: UserPhoto, price: number) {
+  public publishPrice(photo: UserPhoto, price: number, seller: any) {
     // Almacena el precio en el objeto de la foto o en una estructura de datos
     photo.price = price;
     console.log(`Precio de la foto establecido en: ${price}`);
