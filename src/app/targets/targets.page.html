@@ -1,64 +1,18 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Datos de Tarjeta</ion-title>
+    <ion-title>Foto en Venta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Ingresa los datos de tu tarjeta</ion-card-title>
+<ion-content>
+  <ion-card *ngIf="selectedPhoto" class="photo-card">
+    <ion-card-header class="photo-header">
+      <ion-card-title>{{ selectedPhoto.seller }}</ion-card-title>
+      <ion-card-subtitle>Precio: ${{ selectedPhoto.price }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Número de Tarjeta</ion-label>
-        <ion-input 
-          type="tel" 
-          placeholder="1234 5678 9012 3456" 
-          maxlength="19" 
-          [(ngModel)]="numeroTarjeta" 
-          (ionInput)="formatearNumeroTarjeta($event)">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Nombre del Titular</ion-label>
-        <ion-input type="text" placeholder="Nombre Apellido" [(ngModel)]="nombreTitular"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Fecha de Vencimiento</ion-label>
-        <ion-input 
-          type="text" 
-          placeholder="MM/AA" 
-          maxlength="5" 
-          [(ngModel)]="fechaVencimiento" 
-          (ionInput)="formatearFechaVencimiento($event)">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">CVV</ion-label>
-        <ion-input type="password" placeholder="123" maxlength="3" [(ngModel)]="cvv"></ion-input>
-      </ion-item>
-
-      <ion-button expand="block" color="secondary" (click)="guardarTarjeta()">
-        Guardar Tarjeta
-      </ion-button>
+      <ion-img *ngIf="selectedPhoto.webviewPath" [src]="selectedPhoto.webviewPath" class="photo-img"></ion-img>
     </ion-card-content>
   </ion-card>
-
-  <!-- Contenedor para mostrar las tarjetas guardadas -->
-  <div *ngIf="tarjetas.length > 0">
-    <ion-card *ngFor="let tarjeta of tarjetas">
-      <ion-card-header>
-        <ion-card-title>{{ tarjeta.nombreTitular }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Número de Tarjeta: {{ tarjeta.numero }}</p>
-        <p>Fecha de Vencimiento: {{ tarjeta.fechaVencimiento }}</p>
-      </ion-card-content>
-    </ion-card>
-  </div>
 </ion-content>

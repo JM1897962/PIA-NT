@@ -1,0 +1,37 @@
+/* Estilos en targets.page.scss */
+
+.photo-card {
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+    background-color: #1e1e1e;  /* Fondo oscuro para combinar con el negro */
+  }
+  
+  .photo-header {
+    background-color: #2c2c2c;  /* Fondo oscuro para el encabezado */
+    padding: 10px;
+    border-radius: 10px 10px 0 0;  /* Bordes redondeados solo en la parte superior */
+  }
+  
+  ion-card-title {
+    font-weight: bold;
+    color: #f0f0f0;  /* Texto blanco para contrastar con el fondo oscuro */
+  }
+  
+  ion-card-subtitle {
+    color: #ccc;  /* Subtítulo gris suave */
+  }
+  
+  .photo-img {
+    width: 80%;  /* Reducción del tamaño de la imagen */
+    height: auto;  /* Mantener la relación de aspecto */
+    margin: 20px auto;
+    display: block;  /* Centrar la imagen */
+    border-radius: 8px;  /* Bordes redondeados en la imagen */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  /* Sombra ligera */
+  }
+  
+  ion-card-content {
+    padding: 10px;
+  }
+  

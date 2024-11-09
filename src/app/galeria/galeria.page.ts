@@ -13,7 +13,7 @@ export class GaleriaPage implements OnInit {
   constructor(
     public photoService: PhotoService,
     public actionSheetController: ActionSheetController,
-    public alertController: AlertController  // Inyección de AlertController para mostrar el prompt
+    public alertController: AlertController
   ) { }
 
   async ngOnInit() {
@@ -22,7 +22,7 @@ export class GaleriaPage implements OnInit {
 
   public async showActionSheet(photo: UserPhoto, position: number) {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Photos',
+      header: 'Fotos',
       buttons: [
         {
           text: 'Eliminar',
@@ -33,10 +33,9 @@ export class GaleriaPage implements OnInit {
           }
         },
         {
-          text: 'Vender',
+          text: 'Precio',
           icon: 'pricetag',
           handler: async () => {
-            // Abre un prompt para ingresar el precio y el nombre
             const alert = await this.alertController.create({
               header: 'Ingresar Precio y Nombre del Vendedor',
               inputs: [
@@ -65,9 +64,8 @@ export class GaleriaPage implements OnInit {
                     const price = data.price;
                     const seller = data.seller;
                     if (price && seller) {
-                      // Publicar o almacenar el precio y el nombre
-                      console.log(`Precio publicado: ${price}, Vendedor: ${seller}`);
-                      this.photoService.publishPrice(photo, price, seller); // Método para guardar o publicar el precio y el vendedor
+                      // Publicar la foto y moverla a targets
+                      this.photoService.publishPrice(photo, price, seller);
                     } else {
                       console.log('No se ingresó un precio o nombre');
                     }
