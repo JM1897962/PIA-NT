@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class TargetsPage implements OnInit {
   public targetPhotos: UserPhoto[] = [];  // Array para almacenar las fotos cargadas
+  
 
   constructor(
     private photoService: PhotoService,
@@ -43,7 +44,10 @@ export class TargetsPage implements OnInit {
         {
           text: 'Confirmar',
           handler: async () => {
+            // Llamamos al servicio para mover la foto a "Inicio"
             await this.photoService.addToPurchased(photo);  // Mueve la foto a Inicio
+
+            // También eliminamos la foto de "Targets"
             this.removePhotoFromTargets(photo); // Elimina la foto de la lista de Target después de la compra
           }
         }
@@ -57,7 +61,9 @@ export class TargetsPage implements OnInit {
   private removePhotoFromTargets(photo: UserPhoto) {
     const index = this.targetPhotos.indexOf(photo);
     if (index > -1) {
-      this.targetPhotos.splice(index, 1);
+      this.targetPhotos.splice(index, 1); // Eliminar la foto de "targetPhotos"
     }
   }
+
+
 }

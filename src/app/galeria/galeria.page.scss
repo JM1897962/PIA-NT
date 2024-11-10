@@ -1,11 +1,24 @@
-.storyCircle {
-    border-radius: 50%;
-    margin-left: 15px;
-    margin-right: 15px;
-    width: 80px;
-    height: 80px;
-}
-
-.fotoperfil{
-    height: 80px;
-}
+.foto-galeria {
+    width: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
+    height: auto; /* Mantiene la relación de aspecto de la imagen */
+  }
+  
+  /* Esto asegura que haya 3 fotos por fila en pantallas más grandes */
+  ion-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Deja espacio entre las fotos */
+  }
+  
+  ion-col {
+    width: 33.33%; /* Esto hace que haya 3 columnas por fila */
+    padding: 5px; /* Agrega un poco de espacio entre las columnas */
+  }
+  
+  /* Asegurando que las imágenes se ajusten adecuadamente */
+  ion-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Asegura que la imagen se recorte bien si es necesario */
+  }
+  

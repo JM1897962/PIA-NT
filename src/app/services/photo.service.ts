@@ -11,22 +11,31 @@ import { Platform } from '@ionic/angular';
 })
 export class PhotoService {
 
-  public photos: UserPhoto[] = [];
-  public targetPhotos: UserPhoto[] = [];
+  public photos: UserPhoto[] = [];        // Galería de fotos
+  public targetPhotos: UserPhoto[] = [];  // Fotos en la sección de Targets
+  public inicioPhotos: UserPhoto[] = [];  // Fotos compradas (Inicio)
   private PHOTO_STORAGE: string = 'photos';
   private TARGET_STORAGE: string = 'targetPhotos';
+  private INICIO_STORAGE: string = 'inicioPhotos';  // Nueva clave para almacenamiento de fotos compradas
 
   constructor(private platform: Platform) { }
 
   // Cargar las fotos guardadas
   public async loadSaved() {
+    // Cargar fotos de la galería
     const photoList = await Storage.get({ key: this.PHOTO_STORAGE });
     this.photos = JSON.parse(photoList.value) || [];
 
+    // Cargar fotos de Targets
     const targetList = await Storage.get({ key: this.TARGET_STORAGE });
     this.targetPhotos = JSON.parse(targetList.value) || [];
 
+    // Cargar fotos de la sección "Inicio"
+    const inicioList = await Storage.get({ key: this.INICIO_STORAGE });
+    this.inicioPhotos = JSON.parse(inicioList.value) || [];
+
     if (!this.platform.is('hybrid')) {
+      // Cargar archivos locales en webviewPath para visualización
       for (let photo of this.photos) {
         const readFile = await Filesystem.readFile({
           path: photo.filepath,
@@ -36,6 +45,14 @@ export class PhotoService {
       }
 
       for (let photo of this.targetPhotos) {
+        const readFile = await Filesystem.readFile({
+          path: photo.filepath,
+          directory: Directory.Data,
+        });
+        photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
+      }
+
+      for (let photo of this.inicioPhotos) {
         const readFile = await Filesystem.readFile({
           path: photo.filepath,
           directory: Directory.Data,
@@ -167,24 +184,27 @@ export class PhotoService {
 
   // Método para mover la foto comprada a la sección "Inicio"
   public async addToPurchased(photo: UserPhoto) {
-    // Agregar la foto a la lista de "Inicio"
-    this.photos.push(photo);
+    // Mover la foto a la sección "Inicio"
+    this.inicioPhotos.unshift(photo);  // Agregar al principio de inicioPhotos
 
     // Eliminar la foto de "Targets"
     const index = this.targetPhotos.indexOf(photo);
     if (index !== -1) {
-      this.targetPhotos.splice(index, 1);
+      this.targetPhotos.splice(index, 1);  // Eliminar de targetPhotos
     }
 
-    // Guardar los cambios en almacenamiento
+    // Guardar los cambios en almacenamiento solo en la sección "Inicio"
     await Storage.set({
-      key: this.PHOTO_STORAGE,
-      value: JSON.stringify(this.photos),
+      key: this.INICIO_STORAGE,  // Usamos el almacenamiento para "Inicio"
+      value: JSON.stringify(this.inicioPhotos),  // Guardamos solo en "Inicio"
     });
 
+    // Guardar las fotos de Targets, aunque ya no contengan la foto
     await Storage.set({
       key: this.TARGET_STORAGE,
       value: JSON.stringify(this.targetPhotos),
     });
+
+    console.log(`Foto movida a Inicio: ${photo.filepath}`);
   }
 }

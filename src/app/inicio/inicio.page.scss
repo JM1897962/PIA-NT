@@ -2,34 +2,32 @@
     width: 120px; /* Nuevo tamaño */
     height: 120px;
   }
-
-span {
-    display: block;
-}
-.strong {
+  
+  img.galeria {
+    width: 100%; /* Hacemos que la imagen ocupe el 100% del ancho del ion-col */
+    height: auto; /* Para mantener la proporción */
+  }
+  
+  ion-card {
+    padding: 0;
+    margin-bottom: 16px; /* Espacio entre las tarjetas */
+  }
+  
+  ion-col {
+    margin-bottom: 16px; /* Espacio entre las columnas */
+  }
+  
+  .slogan {
+    font-size: 16px;
+    font-style: italic;
+  }
+  
+  ion-card-header ion-card-title {
+    font-size: 14px;
     font-weight: bold;
-}
-
-ion-button {
-    width: 100%;
-}
-
-.centrar {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-}
-
-
-
-img.galeria{
-    width: 150px;
-    height: 150px
-}
-
-.centrar-icono{
-    text-align: center;
-}
-
-
+  }
+  
+  ion-card-header ion-card-subtitle {
+    font-size: 12px;
+  }
+  
