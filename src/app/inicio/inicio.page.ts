@@ -12,11 +12,6 @@ export class InicioPage implements OnInit {
 
   user = { nombre: 'Pedro Perez', uuid: '34523452345234523452345', email: 'correo@gmail.com' };
 
-  list: any[] = [
-    { nombre: 'Pedro Perez', uuid: '34523452345234523452345', email: 'correo@gmail.com' },
-    { nombre: 'Pedro Perez', uuid: '34523452345234523452345', email: 'correo@gmail.com' },
-    { nombre: 'Pedro Perez', uuid: '34523452345234523452345', email: 'correo@gmail.com' }
-  ];
 
   constructor(
     private router: Router,
@@ -29,22 +24,14 @@ export class InicioPage implements OnInit {
     this.authService.getUserEmail().subscribe(email => {
       if (email) {
         this.user.email = email; // Actualiza el correo en la propiedad `user.email`
-        this.list.forEach(item => item.email = email); // Si deseas que también actualice el email en la lista
+
       }
     });
   }
 
   gotReceiver() {
     this.serviceCService.sendObjectSource(this.user);
-    this.serviceCService.sendListSource(this.list);
     this.router.navigate(['/reciever']);
   }
 
-  siguiendo = false;
-  editandoMensaje = false;
-  editandoCorreo = false;
-
-  usuario = {
-    fotoPerfil: '../assets/imagenes/Shadow Man.jpg',
-  };
 }

@@ -164,4 +164,27 @@ export class PhotoService {
 
     console.log(`Foto publicada con precio: ${price} y vendedor: ${seller}`);
   }
+
+  // Método para mover la foto comprada a la sección "Inicio"
+  public async addToPurchased(photo: UserPhoto) {
+    // Agregar la foto a la lista de "Inicio"
+    this.photos.push(photo);
+
+    // Eliminar la foto de "Targets"
+    const index = this.targetPhotos.indexOf(photo);
+    if (index !== -1) {
+      this.targetPhotos.splice(index, 1);
+    }
+
+    // Guardar los cambios en almacenamiento
+    await Storage.set({
+      key: this.PHOTO_STORAGE,
+      value: JSON.stringify(this.photos),
+    });
+
+    await Storage.set({
+      key: this.TARGET_STORAGE,
+      value: JSON.stringify(this.targetPhotos),
+    });
+  }
 }

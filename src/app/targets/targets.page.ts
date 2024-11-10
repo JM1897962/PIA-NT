@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../services/photo.service';
 import { UserPhoto } from '../models/user-photo.model';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-targets',
@@ -9,9 +10,11 @@ import { UserPhoto } from '../models/user-photo.model';
 })
 export class TargetsPage implements OnInit {
   public targetPhotos: UserPhoto[] = [];  // Array para almacenar las fotos cargadas
-  public selectedPhotos: UserPhoto[] = []; // Array para las fotos seleccionadas para la compra
 
-  constructor(private photoService: PhotoService) {}
+  constructor(
+    private photoService: PhotoService,
+    private alertController: AlertController  // Servicio de AlertController para mostrar alertas
+  ) {}
 
   async ngOnInit() {
     // Cargar las fotos de "Targets"
@@ -24,18 +27,37 @@ export class TargetsPage implements OnInit {
     return photo?.webviewPath || ''; // Retorna la ruta de la imagen si existe
   }
 
-  // Función para agregar una foto a las fotos seleccionadas (para la sección de compras)
-  public addToCart(photo: UserPhoto): void {
-    if (!this.selectedPhotos.includes(photo)) {
-      this.selectedPhotos.push(photo);  // Agregar la foto a la lista de compras
-    }
+  // Función para confirmar la compra de una foto
+  public async confirmPurchase(photo: UserPhoto) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar Compra',
+      message: '¿Deseas confirmar la compra de esta imagen?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Compra cancelada');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: async () => {
+            await this.photoService.addToPurchased(photo);  // Mueve la foto a Inicio
+            this.removePhotoFromTargets(photo); // Elimina la foto de la lista de Target después de la compra
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
-  // Función para eliminar una foto de la lista de fotos seleccionadas (si se desea eliminar)
-  public removeFromCart(photo: UserPhoto): void {
-    const index = this.selectedPhotos.indexOf(photo);
+  // Función para eliminar una foto de la lista de Target después de la compra
+  private removePhotoFromTargets(photo: UserPhoto) {
+    const index = this.targetPhotos.indexOf(photo);
     if (index > -1) {
-      this.selectedPhotos.splice(index, 1);  // Eliminar la foto de la lista de compras
+      this.targetPhotos.splice(index, 1);
     }
   }
 }

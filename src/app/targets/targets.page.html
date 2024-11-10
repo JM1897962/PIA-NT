@@ -16,10 +16,11 @@
         <!-- Mostrar la imagen de la foto -->
         <ion-img [src]="getWebviewPath(photo)" class="photo-image"></ion-img>
         <!-- Botón para comprar con diseño más pequeño -->
-        <ion-button (click)="addToCart(photo)" color="secondary" expand="block" class="buy-button">
+        <ion-button (click)="confirmPurchase(photo)" color="secondary" expand="block" class="buy-button">
           Comprar
         </ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>
+
