@@ -17,6 +17,12 @@ export class TargetsPage implements OnInit {
     private alertController: AlertController  // Servicio de AlertController para mostrar alertas
   ) {}
 
+  async ionViewWillEnter() {
+    await this.photoService.loadSaved();
+    this.targetPhotos = this.photoService.targetPhotos;
+  }
+
+
   async ngOnInit() {
     // Cargar las fotos de "Targets"
     await this.photoService.loadSaved();

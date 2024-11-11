@@ -22,6 +22,18 @@ export class InicioPage implements OnInit {
     private photoService: PhotoService  // Inyectar el servicio de fotos
   ) {}
 
+  ionViewWillEnter() {
+    // Cargar las fotos compradas cada vez que se entre a la página
+    this.loadPurchasedPhotos();
+    
+    // Obtener el email actualizado
+    this.authService.getUserEmail().subscribe(email => {
+      if (email) {
+        this.user.email = email;
+      }
+    });
+  }
+
   ngOnInit() {
     // Suscríbete al Observable para obtener el correo del usuario
     this.authService.getUserEmail().subscribe(email => {
@@ -29,7 +41,7 @@ export class InicioPage implements OnInit {
         this.user.email = email; // Actualiza el correo en la propiedad `user.email`
       }
     });
-
+    
     // Cargar las fotos compradas al iniciar la página
     this.loadPurchasedPhotos();
   }
@@ -53,7 +65,11 @@ export class InicioPage implements OnInit {
     if (confirm) {
       await this.photoService.addToPurchased(photo);  // Mover la foto a "Inicio"
       alert("Foto comprada con éxito!");
-      this.loadPurchasedPhotos();  // Recargar las fotos compradas
+
+      // Añadir la foto recién comprada a la lista local de fotos compradas
+      this.purchasedPhotos.unshift(photo);  // Usamos unshift para agregar la nueva foto al principio
+
+      console.log(`Foto añadida a Inicio: ${photo.filepath}`);
     }
   }
 }
