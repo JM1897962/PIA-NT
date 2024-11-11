@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { Auth, authState, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
@@ -8,22 +8,27 @@ import { User } from '../models/user.model';
 })
 export class AuthserviceService {
   public isLoged: any = false;
-  private userEmail = new BehaviorSubject<string | null>(null); // BehaviorSubject para almacenar el correo
+  private userEmail = new BehaviorSubject<string | null>(null);
 
-  constructor(private afAuth: AngularFireAuth) { 
-    afAuth.authState.subscribe(user => {
+  constructor(private auth: Auth) {
+    // Nueva forma de suscribirse al estado de autenticación
+    authState(this.auth).subscribe(user => {
       this.isLoged = user;
       if (user?.email) {
-        this.setUserEmail(user.email); // Establece el correo si el usuario está logueado
+        this.setUserEmail(user.email);
       }
     });
   }
 
-  // Método para iniciar sesión
+  // Método para iniciar sesión actualizado
   async onLogin(user: User) {
     try {
-      const response = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-      this.setUserEmail(user.email); // Guarda el correo al iniciar sesión
+      const response = await signInWithEmailAndPassword(
+        this.auth,
+        user.email,
+        user.password
+      );
+      this.setUserEmail(user.email);
       return response;
     } catch (error) {
       console.log('Error en login user', error);
@@ -31,23 +36,27 @@ export class AuthserviceService {
     }
   }
 
-  // Método para registrar usuario
+  // Método para registrar usuario actualizado
   async onRegister(user: User) {
     try {
-      const response = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-      this.setUserEmail(user.email); // Guarda el correo al registrarse
+      const response = await createUserWithEmailAndPassword(
+        this.auth,
+        user.email,
+        user.password
+      );
+      this.setUserEmail(user.email);
       return response;
     } catch (error) {
       console.log('Error en register user', error);
+      return error;
     }
   }
 
-  // Establece el correo en BehaviorSubject
+  // Estos métodos se mantienen igual
   setUserEmail(email: string) {
     this.userEmail.next(email);
   }
 
-  // Devuelve el correo como un Observable
   getUserEmail(): Observable<string | null> {
     return this.userEmail.asObservable();
   }
