@@ -11,6 +11,7 @@ import { Platform } from '@ionic/angular';
 })
 export class PhotoService {
 
+
   public photos: UserPhoto[] = [];        // Galería de fotos
   public targetPhotos: UserPhoto[] = [];  // Fotos en la sección de Targets
   public inicioPhotos: UserPhoto[] = [];  // Fotos compradas (Inicio)
@@ -206,5 +207,26 @@ export class PhotoService {
     });
 
     console.log(`Foto movida a Inicio: ${photo.filepath}`);
+  }
+
+  public async addToTargets(photo: UserPhoto) {
+    // Mueve la foto a la sección de "Targets"
+    this.targetPhotos.push(photo);
+  
+    // Elimina la foto de "Inicio"
+    this.inicioPhotos = this.inicioPhotos.filter(p => p !== photo);
+  
+    // Guarda las fotos actualizadas en el almacenamiento
+    await Storage.set({
+      key: this.TARGET_STORAGE,
+      value: JSON.stringify(this.targetPhotos),
+    });
+  
+    await Storage.set({
+      key: this.INICIO_STORAGE,
+      value: JSON.stringify(this.inicioPhotos),
+    });
+  
+    console.log(`La foto ${photo.filepath} ha sido movida a Compras.`);
   }
 }

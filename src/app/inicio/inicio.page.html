@@ -4,7 +4,7 @@
       <ion-row>
         <ion-col size="12" class="ion-text-center">
           <img src="assets/imagenes/Logo.png" alt="Foto de perfil" class="fotoperfil grande">
-          <h2>Bienvenido, {{user.email}}</h2>
+          <h2>Bienvenido, {{ user.email }}</h2>
           <p class="slogan">"¡Descubre, colecciona y vende los emojis NFTs más exclusivos!"</p>
         </ion-col>
       </ion-row>
@@ -16,7 +16,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let photo of purchasedPhotos">
-        <ion-card>
+        <ion-card (click)="presentActionSheet(photo)">
           <img [src]="photo.webviewPath" alt="Foto comprada" />
           <ion-card-header>
             <ion-card-title>Precio: {{ photo.price }}$</ion-card-title>
@@ -27,8 +27,3 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-
-
-
-
-

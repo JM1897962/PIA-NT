@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicioCService } from '../services/servicio-c.service';
 import { AuthserviceService } from '../services/authservice.service';
-import { PhotoService } from '../services/photo.service';  // Importar el servicio de fotos
-import { UserPhoto } from '../models/user-photo.model';  // Importar el modelo de foto
+import { PhotoService } from '../services/photo.service';
+import { UserPhoto } from '../models/user-photo.model';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio',
@@ -13,20 +14,19 @@ import { UserPhoto } from '../models/user-photo.model';  // Importar el modelo d
 export class InicioPage implements OnInit {
 
   user = { nombre: 'Pedro Perez', uuid: '34523452345234523452345', email: 'correo@gmail.com' };
-  purchasedPhotos: UserPhoto[] = [];  // Array para almacenar las fotos compradas
+  purchasedPhotos: UserPhoto[] = [];
 
   constructor(
     private router: Router,
     private serviceCService: ServicioCService,
-    private authService: AuthserviceService, // Servicio de autenticación
-    private photoService: PhotoService  // Inyectar el servicio de fotos
+    private authService: AuthserviceService,
+    private photoService: PhotoService,
+    private actionSheetController: ActionSheetController
   ) {}
 
   ionViewWillEnter() {
-    // Cargar las fotos compradas cada vez que se entre a la página
     this.loadPurchasedPhotos();
-    
-    // Obtener el email actualizado
+
     this.authService.getUserEmail().subscribe(email => {
       if (email) {
         this.user.email = email;
@@ -35,41 +35,50 @@ export class InicioPage implements OnInit {
   }
 
   ngOnInit() {
-    // Suscríbete al Observable para obtener el correo del usuario
     this.authService.getUserEmail().subscribe(email => {
       if (email) {
-        this.user.email = email; // Actualiza el correo en la propiedad `user.email`
+        this.user.email = email;
       }
     });
-    
-    // Cargar las fotos compradas al iniciar la página
     this.loadPurchasedPhotos();
   }
 
-  // Función para cargar las fotos compradas
   async loadPurchasedPhotos() {
-    await this.photoService.loadSaved();  // Cargar las fotos guardadas
-    this.purchasedPhotos = this.photoService.inicioPhotos;  // Obtener las fotos de la sección "Inicio", donde están las compradas
+    await this.photoService.loadSaved();
+    this.purchasedPhotos = this.photoService.inicioPhotos;
   }
 
-  // Función para navegar a la página de receiver
-  gotReceiver() {
-    this.serviceCService.sendObjectSource(this.user);
-    this.router.navigate(['/reciever']);
+  async presentActionSheet(photo: UserPhoto) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Opciones',
+      buttons: [
+        {
+          text: 'Vender',
+          role: 'destructive',
+          icon: 'cash-outline',
+          handler: () => {
+            this.sellPhoto(photo);
+          }
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 
-  // Función para manejar la acción de "Comprar" (si es necesario implementar)
-  async onBuy(photo: UserPhoto) {
-    // Confirmar compra
-    const confirm = window.confirm("¿Estás seguro de que deseas comprar esta foto?");
-    if (confirm) {
-      await this.photoService.addToPurchased(photo);  // Mover la foto a "Inicio"
-      alert("Foto comprada con éxito!");
+  // Función para mover la foto a "Targets" y eliminarla de "Inicio" permanentemente
+  sellPhoto(photo: UserPhoto) {
+    // Eliminar la foto de purchasedPhotos en Inicio
+    this.purchasedPhotos = this.purchasedPhotos.filter(p => p !== photo);
 
-      // Añadir la foto recién comprada a la lista local de fotos compradas
-      this.purchasedPhotos.unshift(photo);  // Usamos unshift para agregar la nueva foto al principio
+    // Mover la foto de la sección "Inicio" a "Targets" usando el método del servicio
+    this.photoService.addToTargets(photo);
 
-      console.log(`Foto añadida a Inicio: ${photo.filepath}`);
-    }
+    alert(`La foto ha sido puesta a la Venta.`);
   }
 }
+
