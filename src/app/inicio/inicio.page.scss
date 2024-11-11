@@ -1,33 +1,54 @@
+/* Estilo para el logo de perfil */
 .fotoperfil.grande {
-    width: 120px; /* Nuevo tamaño */
-    height: 120px;
-  }
-  
-  img.galeria {
-    width: 100%; /* Hacemos que la imagen ocupe el 100% del ancho del ion-col */
-    height: auto; /* Para mantener la proporción */
-  }
-  
-  ion-card {
-    padding: 0;
-    margin-bottom: 16px; /* Espacio entre las tarjetas */
-  }
-  
-  ion-col {
-    margin-bottom: 16px; /* Espacio entre las columnas */
-  }
-  
-  .slogan {
-    font-size: 16px;
-    font-style: italic;
-  }
-  
-  ion-card-header ion-card-title {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  ion-card-header ion-card-subtitle {
-    font-size: 12px;
-  }
-  
+  width: 120px; /* Nuevo tamaño */
+  height: 120px;
+}
+
+/* Slogan */
+.slogan {
+  font-size: 16px;
+  font-style: italic;
+  color: #fff; /* Asegura que el slogan tenga texto blanco */
+}
+
+/* Estilo para las imágenes de las tarjetas */
+.card-image {
+  width: 100%;
+  height: 180px; /* Tamaño fijo para las imágenes */
+  object-fit: cover; /* Hace que la imagen se recorte si es necesario */
+  border-radius: 10px; /* Bordes redondeados para las imágenes */
+}
+
+/* Estilo de las tarjetas */
+.photo-card {
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+/* Estilo de las tarjetas (contornos redondeados y sombra) */
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo del encabezado de las tarjetas */
+ion-card-header {
+  background-color: #9e2a2f;  /* Color de fondo para el header de cada tarjeta */
+  color: white;  /* Texto blanco en el encabezado */
+}
+
+/* Estilo de los títulos y subtítulos de las tarjetas */
+ion-card-title, ion-card-subtitle {
+  color: white;  /* Asegura que el texto dentro del encabezado sea blanco */
+}
+
+/* Estilo de las columnas para hacer que las fotos se ajusten bien */
+ion-col {
+  padding: 0 5px;
+}
+
+/* Asegura que las columnas se vean bien en pantallas medianas y grandes */
+ion-col {
+  margin-bottom: 20px;
+}

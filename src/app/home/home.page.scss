@@ -11,17 +11,23 @@
 #container strong {
   font-size: 20px;
   line-height: 26px;
+
+  color: #9e2a2f; /* Guindo */
 }
 
 #container p {
   font-size: 16px;
   line-height: 22px;
 
-  color: #8c8c8c;
-
+  color: #8c8c8c; /* Mantén el gris para un buen contraste */
   margin: 0;
 }
 
 #container a {
   text-decoration: none;
+  color: #9e2a2f; /* Guindo */
+}
+
+#container a:hover {
+  color: #7b1f1b; /* Un tono más oscuro de guindo para el hover */
 }

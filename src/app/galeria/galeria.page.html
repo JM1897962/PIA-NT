@@ -1,21 +1,26 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Vender NFTs</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar style="--background: #9e2a2f;">
+    <ion-title style="color: white;">Vender NFTs</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-grid>
-      <ion-row>
-          <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
-              <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
-          </ion-col>
-      </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <!-- Crear 3 columnas por fila para las fotos -->
+      <ion-col size="4" *ngFor="let photo of photoService.photos; index as position" class="photo-col">
+        <ion-card (click)="showActionSheet(photo, position)" class="photo-card">
+          <ion-img [src]="photo.webviewPath" class="card-image"></ion-img>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
+  <!-- Botón flotante en la parte inferior para añadir una nueva foto -->
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-      <ion-fab-button (click)="photoService.addNewToGallery()">
-          <ion-icon name="camera"></ion-icon>
-      </ion-fab-button>
+    <ion-fab-button style="--background: #9e2a2f;" (click)="photoService.addNewToGallery()">
+      <ion-icon name="camera" style="color: white;"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
 </ion-content>
+

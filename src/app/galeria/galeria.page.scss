@@ -1,24 +1,47 @@
-.foto-galeria {
-    width: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
-    height: auto; /* Mantiene la relación de aspecto de la imagen */
-  }
-  
-  /* Esto asegura que haya 3 fotos por fila en pantallas más grandes */
-  ion-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Deja espacio entre las fotos */
-  }
-  
-  ion-col {
-    width: 33.33%; /* Esto hace que haya 3 columnas por fila */
-    padding: 5px; /* Agrega un poco de espacio entre las columnas */
-  }
-  
-  /* Asegurando que las imágenes se ajusten adecuadamente */
-  ion-img {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Asegura que la imagen se recorte bien si es necesario */
-  }
-  
+/* Hacer que las imágenes ocupen todo el espacio de la columna */
+.card-image {
+  width: 100%;
+  height: 200px; /* Ajustar la altura de las imágenes para que se vean más grandes */
+  object-fit: cover; /* Asegura que la imagen se recorte bien si es necesario */
+  border-radius: 10px; /* Bordes redondeados para las imágenes */
+}
+
+/* Estilo de las columnas para organizar las fotos */
+ion-col {
+  width: 33.33%; /* 3 fotos por fila */
+  padding: 5px; /* Espacio entre las columnas */
+  margin-bottom: 20px; /* Espacio en la parte inferior de las imágenes */
+  display: flex; /* Usamos flexbox para alinear las imágenes */
+  justify-content: center; /* Centra las imágenes dentro de la columna */
+}
+
+/* Estilo de las tarjetas (contornos redondeados y sombra) */
+.photo-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  height: auto; /* Ajusta la altura de la tarjeta automáticamente */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo para el encabezado de cada tarjeta */
+ion-card-header {
+  background-color: #9e2a2f;  /* Fondo guindo para el header de la tarjeta */
+  color: white;  /* Texto blanco en el encabezado */
+}
+
+/* Estilo de los títulos y subtítulos dentro de la tarjeta */
+ion-card-title, ion-card-subtitle {
+  color: white;  /* Asegura que el texto dentro del encabezado sea blanco */
+}
+
+/* Estilo para el botón flotante de la cámara */
+ion-fab-button {
+  --background: #9e2a2f; /* Color guindo para el botón */
+}
+
+/* Estilo para el icono dentro del botón flotante */
+ion-fab-button ion-icon {
+  color: white; /* Icono blanco */
+}

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #9e2a2f;">
     <ion-title>Registrar</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -30,10 +30,16 @@
               <h5 *ngIf="user.password && user.password.length < 6">Mínimo 6 caracteres</h5>
             </ion-text>
 
-            <ion-button expand="block" color="primary" type="submit">Registrar</ion-button>
+            <!-- Botón Registrar con el color guindo -->
+            <ion-button expand="block" style="--background: #9e2a2f; --border-radius: 12px; --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" type="submit">
+              Registrar
+            </ion-button>
 
+            <!-- Botón "Ya tengo una cuenta" -->
             <div class="ion-text-center">
-              <ion-button expand="block" color="secondary" routerLink="/login">Ya tengo una cuenta. Entrar</ion-button>
+              <ion-button expand="block" style="--background: #e53946; --border-radius: 12px; --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" routerLink="/login">
+                Ya tengo una cuenta. Entrar
+              </ion-button>
             </div>
           </form>
         </div>

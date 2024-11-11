@@ -1,26 +1,29 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #9e2a2f;">
     <ion-title>Fotos en Venta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- Sección de fotos disponibles para la compra -->
-  <ion-list lines="full">
-    <ion-card *ngFor="let photo of targetPhotos" class="photo-card">
-      <ion-card-header>
-        <ion-card-title class="card-title">{{ photo.seller }}</ion-card-title>
-        <ion-card-subtitle class="card-subtitle">Precio: ${{ photo.price }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <!-- Mostrar la imagen de la foto -->
-        <ion-img [src]="getWebviewPath(photo)" class="photo-image"></ion-img>
-        <!-- Botón para comprar con diseño más pequeño -->
-        <ion-button (click)="confirmPurchase(photo)" color="secondary" expand="block" class="buy-button">
-          Comprar
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <!-- Cada imagen estará en un "col" con un tamaño constante -->
+      <ion-col size="6" size-md="3" *ngFor="let photo of targetPhotos" class="photo-card">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ photo.seller }}</ion-card-title>
+            <ion-card-subtitle>Precio: ${{ photo.price }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-img [src]="getWebviewPath(photo)" class="photo-image"></ion-img>
+            <!-- Botón de comprar con estilo uniforme -->
+            <ion-button (click)="confirmPurchase(photo)" expand="block" class="buy-button">
+              Comprar
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
-
