@@ -24,6 +24,11 @@ export class MetamaskService {
     }
   }
 
+    // Método agregado
+    getAccount(): string | null {
+        return this.account.getValue();
+      }
+
   private setupEventListeners() {
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
