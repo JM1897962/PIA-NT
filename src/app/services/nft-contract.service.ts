@@ -10,7 +10,7 @@ import * as NFTContractABI from '../../Contracts/CISI.json';
 export class NFTContractService {
   private web3: Web3;
   private contract: any;
-  private readonly CONTRACT_ADDRESS = 'TU_DIRECCIÓN_DEL_CONTRATO'; // Reemplaza con la dirección real
+  private readonly CONTRACT_ADDRESS = '0xd9145CCE52D386f254917e481eB44e9943F39138'; // Reemplaza con la dirección real
 
   constructor(private metamaskService: MetamaskService) {
     if (window.ethereum) {
