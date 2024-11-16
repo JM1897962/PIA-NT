@@ -24,10 +24,27 @@ export class MetamaskService {
     }
   }
 
-    // Método agregado
-    getAccount(): string | null {
-        return this.account.getValue();
+  async getAccount(): Promise<string | null> {
+    try {
+      if (!window.ethereum) {
+        throw new Error('MetaMask no está instalado');
       }
+
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      }) as string[];
+
+      if (accounts.length > 0) {
+        this.account.next(accounts[0]);
+        return accounts[0];
+      }
+
+      return null;
+    } catch (error) {
+      console.error('Error al obtener la cuenta:', error);
+      throw error;
+    }
+  }
 
   private setupEventListeners() {
     if (window.ethereum) {

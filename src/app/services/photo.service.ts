@@ -145,8 +145,9 @@ export class PhotoService {
     });
 
   // Método para publicar el precio y el nombre del vendedor
-  public async publishPrice(photo: UserPhoto, price: number, seller: string) {
+  public async publishPrice(photo: UserPhoto, price: number, seller: string, id: number) {
     // Almacenar el precio y el vendedor en el objeto de la foto
+    photo.id = id,
     photo.price = price;
     photo.seller = seller;
 
@@ -180,7 +181,7 @@ export class PhotoService {
       value: JSON.stringify(this.targetPhotos),
     });
 
-    console.log(`Foto publicada con precio: ${price} y vendedor: ${seller}`);
+    console.log(`Foto publicada con precio: ${price}, vendedor: ${seller} e id: ${id}`);
   }
 
   // Método para mover la foto comprada a la sección "Inicio"

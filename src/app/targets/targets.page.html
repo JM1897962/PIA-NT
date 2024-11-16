@@ -14,6 +14,7 @@
           <ion-card-header>
             <ion-card-title>{{ photo.seller }}</ion-card-title>
             <ion-card-subtitle>Precio: ${{ photo.price }}</ion-card-subtitle>
+            <ion-card-subtitle>ID: {{ photo.id }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
             <ion-img [src]="getWebviewPath(photo)" class="photo-image"></ion-img>

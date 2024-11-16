@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserPhoto } from '../models/user-photo.model';
 import { PhotoService } from '../services/photo.service';
 import { ActionSheetController, AlertController } from '@ionic/angular';
+import { NFTContractService } from '../services/nft-contract.service';
 
 @Component({
   selector: 'app-galeria',
@@ -13,7 +14,8 @@ export class GaleriaPage implements OnInit {
   constructor(
     public photoService: PhotoService,
     public actionSheetController: ActionSheetController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private nftContractService: NFTContractService  // Añadir esta línea
   ) { }
 
   async ngOnInit() {
@@ -48,6 +50,11 @@ export class GaleriaPage implements OnInit {
                   name: 'seller',
                   type: 'text',
                   placeholder: 'Ingrese su nombre'
+                },
+                {
+                  name: 'id',
+                  type: 'number',
+                  placeholder: 'Ingrese el ID del NFT'
                 }
               ],
               buttons: [
@@ -61,11 +68,14 @@ export class GaleriaPage implements OnInit {
                 {
                   text: 'Publicar',
                   handler: (data) => {
+                    const id = data.id;
                     const price = data.price;
                     const seller = data.seller;
-                    if (price && seller) {
+                    if (id && price && seller) {
                       // Publicar la foto y moverla a targets
-                      this.photoService.publishPrice(photo, price, seller);
+                      this.photoService.publishPrice(photo, price, seller, id);
+                      this.nftContractService.createNFT(price);
+                      this.nftContractService.listNFTForSale(id, price);
                     } else {
                       console.log('No se ingresó un precio o nombre');
                     }

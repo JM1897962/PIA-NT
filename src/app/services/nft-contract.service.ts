@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MetamaskService } from './metamask.service';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
-import * as NFTContractABI from '../../Contracts/CISI.json';
+import NFTContractABI from '../../Contracts/CISI.json';
 
 @Injectable({
   providedIn: 'root'
@@ -10,78 +10,80 @@ import * as NFTContractABI from '../../Contracts/CISI.json';
 export class NFTContractService {
   private web3: Web3;
   private contract: any;
-  private readonly CONTRACT_ADDRESS = '0xd9145CCE52D386f254917e481eB44e9943F39138'; // Reemplaza con la dirección real
+  private readonly CONTRACT_ADDRESS = '0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B';
 
   constructor(private metamaskService: MetamaskService) {
     if (window.ethereum) {
       this.web3 = new Web3(window.ethereum as any);
       this.contract = new this.web3.eth.Contract(
-        NFTContractABI as AbiItem[],
+        NFTContractABI.abi as AbiItem[],
         this.CONTRACT_ADDRESS
       );
     }
   }
 
-  // Crear un nuevo NFT
   async createNFT(price: number) {
     const account = await this.metamaskService.getAccount();
+    if (!account) {
+      throw new Error('No se ha encontrado una cuenta conectada');
+    }
     const priceWei = this.web3.utils.toWei(price.toString(), 'ether');
-    
     return this.contract.methods.createNFT(priceWei).send({
       from: account
     });
   }
 
-  // Listar NFT para venta
   async listNFTForSale(nftId: number, price: number) {
     const account = await this.metamaskService.getAccount();
+    if (!account) {
+      throw new Error('No se ha encontrado una cuenta conectada');
+    }
     const priceWei = this.web3.utils.toWei(price.toString(), 'ether');
-    
     return this.contract.methods.listNFTForSale(nftId, priceWei).send({
       from: account
     });
   }
 
-  // Retirar NFT de la venta
   async withdrawNFTFromSale(nftId: number) {
     const account = await this.metamaskService.getAccount();
-    
+    if (!account) {
+      throw new Error('No se ha encontrado una cuenta conectada');
+    }
     return this.contract.methods.withdrawNFTFromSale(nftId).send({
       from: account
     });
   }
 
-  // Comprar un NFT
   async purchaseNFT(nftId: number, price: number) {
     const account = await this.metamaskService.getAccount();
+    if (!account) {
+      throw new Error('No se ha encontrado una cuenta conectada');
+    }
     const priceWei = this.web3.utils.toWei(price.toString(), 'ether');
-    
     return this.contract.methods.purchaseNFT(nftId).send({
       from: account,
       value: priceWei
     });
   }
 
-  // Retirar fondos
   async withdrawFunds() {
     const account = await this.metamaskService.getAccount();
-    
+    if (!account) {
+      throw new Error('No se ha encontrado una cuenta conectada');
+    }
     return this.contract.methods.withdrawFunds().send({
       from: account
     });
   }
 
-  // Obtener NFTs de un usuario
   async getUserNFTs(address: string) {
     return this.contract.methods.getUserNFTs(address).call();
   }
 
-  // Obtener detalles de un NFT
   async getNFTDetails(nftId: number) {
     return this.contract.methods.nfts(nftId).call();
   }
 
-  // Obtener balance de un usuario
   async getBalance(address: string) {
     return this.contract.methods.balances(address).call();
   }
