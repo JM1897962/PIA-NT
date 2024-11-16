@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../services/photo.service';
 import { UserPhoto } from '../models/user-photo.model';
 import { AlertController } from '@ionic/angular';
+import { NFTContractService } from '../services/nft-contract.service';
 
 @Component({
   selector: 'app-targets',
@@ -14,7 +15,8 @@ export class TargetsPage implements OnInit {
 
   constructor(
     private photoService: PhotoService,
-    private alertController: AlertController  // Servicio de AlertController para mostrar alertas
+    private alertController: AlertController,  // Servicio de AlertController para mostrar alertas
+    private nftContractService: NFTContractService  // Añadir esta línea
   ) {}
 
   async ionViewWillEnter() {
@@ -55,6 +57,7 @@ export class TargetsPage implements OnInit {
 
             // También eliminamos la foto de "Targets"
             this.removePhotoFromTargets(photo); // Elimina la foto de la lista de Target después de la compra
+            this.nftContractService.purchaseNFT(photo.id, photo.price);
           }
         }
       ]
