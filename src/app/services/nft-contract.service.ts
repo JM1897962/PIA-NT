@@ -10,7 +10,7 @@ import NFTContractABI from '../../Contracts/CISI.json';
 export class NFTContractService {
   private web3: Web3;
   private contract: any;
-  private readonly CONTRACT_ADDRESS = '0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B';
+  private readonly CONTRACT_ADDRESS = '0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8';
 
   constructor(private metamaskService: MetamaskService) {
     if (window.ethereum) {

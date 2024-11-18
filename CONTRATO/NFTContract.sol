@@ -8,6 +8,16 @@ contract NFTMarketplace {
         address owner;
         uint256 price;
         bool forSale;
+        bool exists;
+    }
+
+    struct NFTDetails {
+        uint256 id;
+        address owner;
+        uint256 price;
+        bool forSale;
+        bool exists;
+        address[] previousOwners;
     }
 
     // Variables
@@ -15,6 +25,10 @@ contract NFTMarketplace {
     mapping(uint256 => NFT) public nfts;
     mapping(address => uint256) public balances;
     mapping(address => uint256[]) public userNFTs;
+    
+    // Nuevos mappings
+    mapping(uint256 => address[]) private nftHistory;
+    uint256[] private allNFTIds;
 
     // Eventos
     event NFTCreated(uint256 indexed id, address indexed owner, uint256 price);
@@ -26,8 +40,10 @@ contract NFTMarketplace {
     function createNFT(uint256 _price) public {
         require(_price > 0, "El precio debe ser mayor a cero");
         
-        nfts[nextNFTId] = NFT(nextNFTId, msg.sender, _price, false);
+        nfts[nextNFTId] = NFT(nextNFTId, msg.sender, _price, false, true);
         userNFTs[msg.sender].push(nextNFTId);
+        allNFTIds.push(nextNFTId);  // Añadir a la lista global
+        nftHistory[nextNFTId].push(msg.sender);  // Iniciar historial
         
         emit NFTCreated(nextNFTId, msg.sender, _price);
         nextNFTId++;
@@ -59,6 +75,7 @@ contract NFTMarketplace {
     // Función para comprar un NFT
     function purchaseNFT(uint256 _nftId) public payable {
         NFT storage nft = nfts[_nftId];
+        require(nft.exists, "NFT no existe");
         require(nft.forSale, "El NFT no esta a la venta");
         require(msg.value >= nft.price, "Fondos insuficientes para la compra");
         require(msg.sender != nft.owner, "El propietario no puede comprar su propio NFT");
@@ -68,9 +85,9 @@ contract NFTMarketplace {
         nft.forSale = false;
         balances[seller] += msg.value;
 
-        // Actualizar la lista de NFTs del comprador y del vendedor
         _removeUserNFT(seller, _nftId);
         userNFTs[msg.sender].push(_nftId);
+        nftHistory[_nftId].push(msg.sender);  // Actualizar historial
 
         emit NFTPurchased(_nftId, msg.sender, seller, nft.price);
     }
@@ -99,5 +116,57 @@ contract NFTMarketplace {
     // Función para obtener la lista de NFTs de un usuario
     function getUserNFTs(address _user) public view returns (uint256[] memory) {
         return userNFTs[_user];
+    }
+
+    // Nuevas funciones para visualización
+    
+    function getAllNFTs() public view returns (NFTDetails[] memory) {
+        NFTDetails[] memory allNFTs = new NFTDetails[](allNFTIds.length);
+        
+        for (uint256 i = 0; i < allNFTIds.length; i++) {
+            uint256 nftId = allNFTIds[i];
+            NFT storage nft = nfts[nftId];
+            address[] storage history = nftHistory[nftId];
+            
+            allNFTs[i] = NFTDetails(
+                nft.id,
+                nft.owner,
+                nft.price,
+                nft.forSale,
+                nft.exists,
+                history
+            );
+        }
+        
+        return allNFTs;
+    }
+
+    function getUserNFTsDetailed(address _user) public view returns (
+        NFTDetails[] memory userNFTDetails
+    ) {
+        uint256[] memory userTokens = userNFTs[_user];
+        userNFTDetails = new NFTDetails[](userTokens.length);
+        
+        for (uint256 i = 0; i < userTokens.length; i++) {
+            uint256 nftId = userTokens[i];
+            NFT storage nft = nfts[nftId];
+            address[] storage history = nftHistory[nftId];
+            
+            userNFTDetails[i] = NFTDetails(
+                nft.id,
+                nft.owner,
+                nft.price,
+                nft.forSale,
+                nft.exists,
+                history
+            );
+        }
+        
+        return userNFTDetails;
+    }
+
+    function getNFTHistory(uint256 _nftId) public view returns (address[] memory) {
+        require(nfts[_nftId].exists, "NFT no existe");
+        return nftHistory[_nftId];
     }
 }
